@@ -12,7 +12,10 @@ export class HomeComponent implements OnInit {
 
   sellSide: any[] = [];
   buySide: any[] = [];
+  otherAssetsArray: any[] = [];
   averagePrice: number = 0;
+
+  dictionaryOfAssets = ['.BADAXBT','.BDOGET', '.BDOGE', '.ADAUSDPI', '.TRXBON' ,'.BBUSDT', 'ETHUSDT', 'LTCUSDT'];
 
   constructor() { }
 
@@ -20,13 +23,33 @@ export class HomeComponent implements OnInit {
     this.initWorker();
     // setTimeout(() => {
     //   this.socket.unsubscribe();
-    // }, 3000)
+    // }, 5000)
   }
 
+  ngOnDestroy(){
+    this.stopWorker()
+  }
 
   initWorker() {
     this.socket.subscribe((res) => {
-      let obj: any = res;
+      this.handleResponse(res);
+      },
+      (e) => {
+        console.error('error:', e);
+      },
+      () => {
+        console.log('Socket closed');
+      }
+    );
+  }
+
+  stopWorker() {
+    this.socket.unsubscribe();
+    console.log('Socket closed');
+  }
+
+  handleResponse(res: any) {
+    let obj: any = res;
       let data = obj?.data;
       // console.log(obj);
       if(obj?.table === 'orderBookL2_25'){
@@ -55,7 +78,6 @@ export class HomeComponent implements OnInit {
               })
             }
           } 
-          console.log('update');
           break;
 
           case 'delete':
@@ -93,32 +115,64 @@ export class HomeComponent implements OnInit {
         }
         this.calculateAveragePrice(this.sellSide, this.buySide);
       } else if(obj?.table === 'instrument') {
-        // console.log('instrument');
+        
         console.log(obj);
-      }},
-      (e) => {
-        console.error('error:', e);
-      },
-      () => {
-        console.log('Socket closed');
-      }
-    );
-  }
+        switch(obj?.action) {
+          case 'partial': 
+          obj?.data.map((row:any) => {
+            if(this.dictionaryOfAssets.includes(row.symbol)) {
+              this.otherAssetsArray.push(row);
+            }
+          });
+          break;
 
-  stopWorker() {
-    this.socket.unsubscribe();
-    console.log('Socket closed');
+          case 'update':
+            for(let i = 0; i < data.length ; i++) {
+              let refId = data[i].symbol;
+              this.otherAssetsArray.map((row:any) => {
+                if(row.symbol == refId) {
+                  row.bidPrice = data[i].bidPrice != null && data[i].bidPrice != undefined ? data[i].bidPrice : row.bidPrice;
+                  row.askPrice = data[i].askPrice != null && data[i].askPrice != undefined ? data[i].askPrice : row.askPrice;
+                  row.lastPrice = data[i].lastPrice != null && data[i].lastPrice != undefined ? data[i].lastPrice : row.lastPrice;
+                }
+              });
+            }
+            break;
+          
+          case 'delete':
+            for(let i = 0; i < data.length ; i++) {
+              let refId = data[i].symbol;
+              this.otherAssetsArray.map((row:any) => {
+                if(row.symbol == refId) {
+                  this.otherAssetsArray.splice(this.otherAssetsArray.indexOf(row), 1);
+                }
+              });
+            }
+            break;
+          
+          case 'insert':
+            for(let i = 0; i < data.length ; i++) {
+              if(this.dictionaryOfAssets.includes(data[i].symbol)) {
+                this.otherAssetsArray.push(data[i]);
+              }
+            }
+            break;
+
+          default: 
+          break;
+        }
+
+        this.otherAssetsArray.sort((a,b) => {return b.markPrice - a.markPrice})
+      }
   }
 
   calculateAveragePrice(array1: any, array2:any) {
     const sumArray1 = array1.reduce((a: any, b: any) => a + b.price, 0);
     const sumArray2 = array2.reduce((a: any, b: any) => a + b.price, 0);
     const totalLength = array1.length + array2.length;
-    console.log(sumArray1, sumArray2);
 
     const totalSum = sumArray1 + sumArray2;
     const average = totalSum / totalLength;
     this.averagePrice = average;
-    console.log(average);
   }
 }

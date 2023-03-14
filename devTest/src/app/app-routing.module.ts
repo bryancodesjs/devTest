@@ -4,7 +4,8 @@ import { HistoryComponent } from './components/history/history/history.component
 import { HomeComponent } from './components/home/home/home.component';
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
+  {path: '', redirectTo: '/home', pathMatch: 'full'},
+  {path: 'home', component: HomeComponent},
   {path: 'history', component: HistoryComponent}
 ];
 
