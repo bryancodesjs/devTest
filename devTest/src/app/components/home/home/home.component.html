@@ -1,1 +1,87 @@
-<p>home works!</p>
+<div class="container-fluid">
+    <div class="container">
+        <div class="row g-3 mt-3 pb-3">
+
+            <div class="col-12 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row g-3 mt-3">
+                            <div class="col-lg-3 col-12">
+                                <h5 class="fw-bold">XBT/USD</h5>
+                                <h1 class="fw-medium display-4">25,729</h1>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-2">
+                                <label for="" class="text-muted">Last price</label>
+                                <h5 class="text-success">0.0005156 ($25,578.12)</h5>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-2">
+                                <label for="" class="text-muted">24h change</label>
+                                <h5>0.0005156 +0.32%</h5>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-2">
+                                <label for="" class="text-muted">24h low</label>
+                                <h5>0.0005156</h5>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-2">
+                                <label for="" class="text-muted">24h high</label>
+                                <h5>0.0005156</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="fw-bold">Sell Orders</h5>
+                        <div class="table-container">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Price (USD)</th>
+                                        <th>Type</th>
+                                        <th>Order Size</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of sellSide">
+                                        <td>{{item?.price | number}}</td>
+                                        <td class="text-danger fw-bold">{{item?.side}}</td>
+                                        <td>{{item?.size | number}}</td>
+                                    </tr>
+                                </tbody>
+                                
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="fw-bold">Buy Orders</h5>
+                        <div class="table-container">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Price (USD)</th>
+                                        <th>Type</th>
+                                        <th>Order Size</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of buySide">
+                                        <td>{{item?.price | number}}</td>
+                                        <td class="text-success fw-bold">{{item?.side}}</td>
+                                        <td>{{item?.size | number}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
