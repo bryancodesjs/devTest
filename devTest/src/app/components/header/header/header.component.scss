@@ -1,0 +1,10 @@
+.nav-item {
+    border-bottom: 4px solid unset;
+    cursor: pointer;
+    &.active {
+        border-bottom: 4px solid #d56a88;
+    }
+    &:hover {
+        background-color: #292e33;
+    }
+}

@@ -12,6 +12,7 @@ export class HomeComponent implements OnInit {
 
   sellSide: any[] = [];
   buySide: any[] = [];
+  averagePrice: number = 0;
 
   constructor() { }
 
@@ -19,7 +20,7 @@ export class HomeComponent implements OnInit {
     this.initWorker();
     // setTimeout(() => {
     //   this.socket.unsubscribe();
-    // }, 10000)
+    // }, 3000)
   }
 
 
@@ -27,7 +28,7 @@ export class HomeComponent implements OnInit {
     this.socket.subscribe((res) => {
       let obj: any = res;
       let data = obj?.data;
-      console.log(obj);
+      // console.log(obj);
       if(obj?.table === 'orderBookL2_25'){
         switch(obj?.action) {
           case 'partial': 
@@ -90,6 +91,10 @@ export class HomeComponent implements OnInit {
           default:
             break;
         }
+        this.calculateAveragePrice(this.sellSide, this.buySide);
+      } else if(obj?.table === 'instrument') {
+        // console.log('instrument');
+        console.log(obj);
       }},
       (e) => {
         console.error('error:', e);
@@ -103,5 +108,17 @@ export class HomeComponent implements OnInit {
   stopWorker() {
     this.socket.unsubscribe();
     console.log('Socket closed');
+  }
+
+  calculateAveragePrice(array1: any, array2:any) {
+    const sumArray1 = array1.reduce((a: any, b: any) => a + b.price, 0);
+    const sumArray2 = array2.reduce((a: any, b: any) => a + b.price, 0);
+    const totalLength = array1.length + array2.length;
+    console.log(sumArray1, sumArray2);
+
+    const totalSum = sumArray1 + sumArray2;
+    const average = totalSum / totalLength;
+    this.averagePrice = average;
+    console.log(average);
   }
 }
