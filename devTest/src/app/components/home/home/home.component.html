@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <div class="row g-4 mt-3 pb-3">
+    <div class="row g-4 mt-3 pb-3 animate__animated animate__fadeIn anim-duration-half">
 
         <div class="col-12 col-lg-8">
             <div class="row g-3">
@@ -7,10 +7,17 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="row g-3">
-                                <div class="col-auto">
+                                <div class="col-auto" *ngIf="!pageIsLoading">
                                     <h5 class="fw-bold">XBT:USD</h5>
                                     <h5 class="fw-bold">Bitcoin Spot Rate <span class="text-muted">(Average)</span></h5>
                                     <h1 class="fw-medium display-4">${{averagePrice | number}}</h1>
+                                </div>
+                                <div class="placeholder-glow" *ngIf="pageIsLoading">
+                                    <span class="placeholder col-1"></span>
+                                    <br>
+                                    <span class="placeholder col-2"></span>
+                                    <br>
+                                    <span class="placeholder col-4"></span>
                                 </div>
                             </div>
                         </div>
@@ -19,7 +26,14 @@
     
                 <div class="col-12 col-lg-6">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body placeholder-glow" *ngIf="pageIsLoading">
+                            <span class="placeholder col-1"></span>
+                            <br>
+                            <span class="placeholder col-12"></span>
+                            <br>
+                            <span class="placeholder col-10"></span>
+                        </div>
+                        <div class="card-body" *ngIf="!pageIsLoading">
                             <h5 class="fw-bold">Sell Orders</h5>
                             <div class="table-container">
                                 <table class="table table-sm">
@@ -46,7 +60,14 @@
                 
                 <div class="col-12 col-lg-6">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body placeholder-glow" *ngIf="pageIsLoading">
+                            <span class="placeholder col-1"></span>
+                            <br>
+                            <span class="placeholder col-12"></span>
+                            <br>
+                            <span class="placeholder col-10"></span>
+                        </div>
+                        <div class="card-body" *ngIf="!pageIsLoading">
                             <h5 class="fw-bold">Buy Orders</h5>
                             <div class="table-container">
                                 <table class="table table-sm">
@@ -74,7 +95,14 @@
 
         <div class="col-12 col-lg-4">
             <div class="card bg-light">
-                <div class="card-body">
+                <div class="card-body placeholder-glow" *ngIf="pageIsLoading">
+                    <span class="placeholder col-1"></span>
+                    <br>
+                    <span class="placeholder col-12"></span>
+                    <br>
+                    <span class="placeholder col-10"></span>
+                </div>
+                <div class="card-body" *ngIf="!pageIsLoading">
                     <h5 class="fw-bold">Other Assets</h5>
                     <div class="table-container">
                         <table class="table table-sm">

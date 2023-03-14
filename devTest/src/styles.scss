@@ -18,7 +18,9 @@ h5.text-success, td.text-success {
 .display-4 {
     font-weight: 500 !important;
 }
-
+input {
+    background-color: #f8f8fa !important;
+}
 /* width */
 ::-webkit-scrollbar {
     width: 0px;
@@ -38,4 +40,7 @@ h5.text-success, td.text-success {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+.anim-duration-half {
+    animation-duration: 0.5s  !important;
 }

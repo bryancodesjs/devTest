@@ -17,6 +17,8 @@ export class HomeComponent implements OnInit {
 
   dictionaryOfAssets = ['.BADAXBT','.BDOGET', '.BDOGE', '.ADAUSDPI', '.TRXBON' ,'.BBUSDT', 'ETHUSDT', 'LTCUSDT'];
 
+  pageIsLoading: boolean = true;
+
   constructor() { }
 
   ngOnInit(): void {
@@ -27,7 +29,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnDestroy(){
-    this.stopWorker()
+    this.stopWorker();
   }
 
   initWorker() {
@@ -163,6 +165,9 @@ export class HomeComponent implements OnInit {
         }
 
         this.otherAssetsArray.sort((a,b) => {return b.markPrice - a.markPrice})
+      }
+      if(this.pageIsLoading) {
+        this.pageIsLoading = false;
       }
   }
 

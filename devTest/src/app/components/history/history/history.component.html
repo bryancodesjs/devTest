@@ -1,9 +1,47 @@
 <div class="container-fluid">
-    <div class="row g-4 mt-3 pb-3">
+    <div class="row g-4 mt-3 pb-3 animate__animated animate__fadeIn anim-duration-half">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <h5 class="fw-bold">XTB Price History</h5>
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <input type="text" class="form-control" placeholder="Filter results">
+                        </div>
+                        <div class="col-12">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Price</th>
+                                        <th>Type</th>
+                                        <th>Order Size</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let result of results">
+                                        <td>354</td>
+                                        <td>Sell</td>
+                                        <td>30493849</td>
+                                        <td>3/14/2023</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-white border-0">
+                    <div class="d-flex justify-content-center">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                              <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                              <li class="page-item"><a class="page-link" href="#">1</a></li>
+                              <li class="page-item"><a class="page-link" href="#">2</a></li>
+                              <li class="page-item"><a class="page-link" href="#">3</a></li>
+                              <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
             </div>
         </div>
