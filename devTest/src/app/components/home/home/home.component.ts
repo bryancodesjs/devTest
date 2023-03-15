@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WebSocketSubject } from 'rxjs/webSocket';
+import { FirebaseService } from 'src/app/services/firebase/firebase.service';
+import { Record } from 'src/app/models/record';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +21,8 @@ export class HomeComponent implements OnInit {
 
   pageIsLoading: boolean = true;
 
-  constructor() { }
+  newRecord: Record = new Record();
+  constructor(private firebase: FirebaseService) { }
 
   ngOnInit(): void {
     this.initWorker();
@@ -55,9 +58,20 @@ export class HomeComponent implements OnInit {
       let data = obj?.data;
       // console.log(obj);
       if(obj?.table === 'orderBookL2_25'){
+        // console.log(obj);
         switch(obj?.action) {
           case 'partial': 
-          obj?.data.map((row:any) => {row.side == 'Sell' ? this.sellSide.push(row) : this.buySide.push(row)});
+          obj?.data.map((row:any) => {
+            if(row.side == 'Sell') {
+              this.sellSide.push(row);
+            } else if(row.side == 'Buy') {
+              this.buySide.push(row);
+            }
+            let tempItem: Record = new Record();
+            tempItem = row;
+            // console.log(tempItem);
+            this.firebase.create(row);
+          });
           break;
 
           case 'update':
@@ -118,7 +132,7 @@ export class HomeComponent implements OnInit {
         this.calculateAveragePrice(this.sellSide, this.buySide);
       } else if(obj?.table === 'instrument') {
         
-        console.log(obj);
+        // console.log(obj);
         switch(obj?.action) {
           case 'partial': 
           obj?.data.map((row:any) => {

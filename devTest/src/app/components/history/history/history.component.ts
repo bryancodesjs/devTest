@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import { FirebaseService } from 'src/app/services/firebase/firebase.service';
+import { Record } from 'src/app/models/record';
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',
@@ -7,17 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HistoryComponent implements OnInit {
 
-  results = [
-    {},
-    {},
-    {},
-    {},
-    {},
-    {}
-  ]
-  constructor() { }
+  results: any[] = [];
+  constructor(private firebase: FirebaseService) { }
 
   ngOnInit(): void {
+    this.fetchData();
   }
 
+  fetchData() {
+    this.firebase.getAll().snapshotChanges().subscribe(data => {
+      this.results = [];
+      data.forEach(item => {
+        let a = item.payload.toJSON();
+        console.log(a);
+        this.results.push(a);
+      })
+    })
+  }
 }
