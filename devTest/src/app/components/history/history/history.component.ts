@@ -7,7 +7,7 @@ import { Record } from 'src/app/models/record';
   styleUrls: ['./history.component.scss']
 })
 export class HistoryComponent implements OnInit {
-
+  page:number = 1;
   results: any[] = [];
   constructor(private firebase: FirebaseService) { }
 
