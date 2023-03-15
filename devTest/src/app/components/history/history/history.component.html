@@ -2,37 +2,50 @@
     <div class="row g-4 mt-3 pb-3 animate__animated animate__fadeIn anim-duration-half">
         <div class="col-12">
             <div class="card">
-                <div class="card-body">
+                <div class="card-body" *ngIf="pageIsLoading">
+                    <div class="placeholder-glow">
+                        <span class="placeholder col-1"></span>
+                        <br>
+                        <span class="placeholder col-12"></span>
+                        <br>
+                        <span class="placeholder col-12"></span>
+                        <br>
+                        <span class="placeholder col-12"></span>
+                        <br>
+                        <span class="placeholder col-12"></span>
+                    </div>
+                </div>
+                <div class="card-body" *ngIf="!pageIsLoading">
                     <h5 class="fw-bold">XTB Price History</h5>
                     <div class="row g-3">
-                        <div class="col-12">
+                        <!-- <div class="col-12">
                             <input type="text" class="form-control" placeholder="Filter results">
-                        </div>
+                        </div> -->
                         <div class="col-12">
                             <table class="table">
                                 <thead>
                                     <tr>
                                         <th>TX ID</th>
-                                        <th>Price (USD)</th>
-                                        <th>Type</th>
-                                        <th>Order Size</th>
-                                        <th>Date</th>
+                                        <th>Price (USD) <button (click)="sortData('price')" class="btn btn-sm"><i class="bi bi-funnel-fill"></i></button></th>
+                                        <th>Type <button (click)="sortData('side')" class="btn btn-sm"><i class="bi bi-funnel-fill"></i></button></th>
+                                        <th>Order Size <button (click)="sortData('size')" class="btn btn-sm"><i class="bi bi-funnel-fill"></i></button></th>
+                                        <th>Date <button (click)="sortData('date')" class="btn btn-sm"><i class="bi bi-funnel-fill"></i></button></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let result of results | paginate: { itemsPerPage: 10, currentPage: page }">
                                         <td>{{result?.id}}</td>
                                         <td>${{result?.price | number}}</td>
-                                        <td>{{result?.side}}</td>
+                                        <td [class]="result?.side == 'Sell' ? 'text-danger fw-bold' : 'text-success fw-bold'">{{result?.side}}</td>
                                         <td>{{result?.size | number}}</td>
-                                        <td>{{result?.timestamp | date}}</td>
+                                        <td>{{result?.timestamp | date: 'MMM d, y, h:mm a'}}</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                <div class="card-footer bg-white border-0">
+                <div class="card-footer bg-white border-0" *ngIf="!pageIsLoading">
                     <div class="d-flex justify-content-center">
                         <pagination-controls (pageChange)="page = $event"></pagination-controls>
                     </div>

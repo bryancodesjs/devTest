@@ -26,9 +26,10 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.initWorker();
-    // setTimeout(() => {
-    //   this.socket.unsubscribe();
-    // }, 5000)
+    //this 60-second timeout is for preventing overconsumption on my firebase plan
+    setTimeout(() => {
+      this.socket.unsubscribe();
+    }, 60000)
   }
 
   ngOnDestroy(){
