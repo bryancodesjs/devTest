@@ -29,6 +29,7 @@ export class HomeComponent implements OnInit {
     //this 60-second timeout is for preventing overconsumption on my firebase plan
     setTimeout(() => {
       this.socket.unsubscribe();
+      window.alert('The worker has stopped to prevent overconsumption. Please refresh the page to start it again.');
     }, 60000)
   }
 
