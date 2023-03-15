@@ -14,7 +14,7 @@ I built this project using Angular 14, and I included the following libraries/pa
 
 ## Screenshots
 
-![Home page](/assets/home.png)
+![Home page](https://i.imgur.com/vZl73sE.png)
 
-![History page](/assets/history.png)
+![History page](https://i.imgur.com/Q6xly5x.png)
 
