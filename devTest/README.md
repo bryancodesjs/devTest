@@ -14,7 +14,7 @@ I built this project using Angular 14, and I included the following libraries/pa
 
 ## Screenshots
 
-![Home page](https://devtest-bcampos.netlify.app/assets/home.png)
+![Home page](/assets/home.png)
 
-![History page](https://devtest-bcampos.netlify.app/assets/history.png)
+![History page](/assets/history.png)
 
